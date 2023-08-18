@@ -1,0 +1,66 @@
+import { Popover, Transition } from "@headlessui/react";
+import { FaSearch } from "react-icons/fa";
+import { IoNotificationsOutline } from "react-icons/io5";
+const Header = () => {
+  return (
+    <>
+      <div className="flex justify-between items-center bg-white h-16 px-4 rounded-xl mx-3 shadow-md">
+        <div className="relative">
+          <FaSearch
+            fontSize={14}
+            className="text-gray-400 absolute top-1/2 -translate-y-1/2 left-3"
+          />
+          <input
+            type="text"
+            placeholder="Search ..."
+            className="text-sm focus:outline-none focus:border-gray-300 active:outline-none h-10 w-[24rem] border border-gray-300 rounded-lg pl-11 pr-4"
+          />
+        </div>
+        <div className="flex items-center gap-2 mr-2">
+          <Popover className="relative">
+            {({ open }) => (
+              <>
+                <Popover.Button
+                  className={`p-1.5 rounded-md inline-flex items-center text-gray-700 hover:text-opacity-100 focus:outline-none active:bg-gray-800 ${
+                    open ? "bg-red-800 text-white font-bold" : ""
+                  }`}
+                >
+                  <IoNotificationsOutline className="cursor-pointer" />
+                </Popover.Button>
+                <Transition
+                  enter="transition duration-300 ease-out"
+                  enterFrom="transform scale-95 opacity-0"
+                  enterTo="transform scale-300 opacity-100"
+                  leave="transition duration-75 ease-out"
+                  leaveFrom="transform scale-300 opacity-100"
+                  leaveTo="transform scale-95 opacity-0"
+                >
+                  <Popover.Panel className="absolute right-0 z-10 mt-2.5 w-80">
+                    <div className="bg-white rounded-md shadow-md ring-1 ring-black ring-opacity-5 px-2 py-2.5">
+                      <strong className="text-gray-700 font-medium align-center items-center justify-center">
+                        Notification
+                      </strong>
+                      <div className="mt-2 py-1 text-sm">
+                        This is the Notification Area
+                      </div>
+                    </div>
+
+                    <img src="/solutions.jpg" alt="" />
+                  </Popover.Panel>
+                </Transition>
+              </>
+            )}
+          </Popover>
+          <small>Welcome, Panda</small>
+          <img
+            className="h-10 w-10 rounded-full object-cover bg-orange-200 bg-cover bg-no-repeat bg-center"
+            src="https://images.pexels.com/photos/146244/pexels-photo-146244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt=""
+          />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Header;

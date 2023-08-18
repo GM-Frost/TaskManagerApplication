@@ -1,0 +1,49 @@
+import { FcSerialTasks } from "react-icons/fc";
+import { SIDEBAR_LINKS } from "../lib/navigation";
+import { Link, useLocation } from "react-router-dom";
+import { HiOutlineLogout } from "react-icons/hi";
+
+function SideBarLink({ link }) {
+  const { pathname } = useLocation();
+  const isActive = link.path === pathname;
+
+  return (
+    <Link
+      to={link.path}
+      className={`flex items-center gap-2 font-light px-3 py-2 hover:bg-[#fde68a] hover:no-underline rounded-lg text-base ${
+        isActive ? "bg-[#fde68a]" : ""
+      } `}
+    >
+      <span className="text-xl">{link.icon}</span>
+      {link.label}
+    </Link>
+  );
+}
+
+const Sidebar = () => {
+  return (
+    <>
+      <div className="bg-[#ffffff] shadow-md text-black flex flex-col  w-64 p-3">
+        <div className="flex items-center gap-2 px-1 py-3">
+          <FcSerialTasks fontSize={24} />
+          <header className="text-black-300 text-lg font-bold border-b">
+            <span className="text-orange-700">Task Manager</span> App
+          </header>
+        </div>
+        <div className="flex-1 py-8 flex flex-col gap-2">
+          {SIDEBAR_LINKS.map((link) => (
+            <SideBarLink key={link.key} link={link} />
+          ))}
+        </div>
+        <button className="flex bg-black hover:bg-red-800 text-white font-bold py-2 px-4 rounded-md">
+          <span className="text-xl">
+            <HiOutlineLogout />
+          </span>
+          Logout
+        </button>
+      </div>
+    </>
+  );
+};
+
+export default Sidebar;

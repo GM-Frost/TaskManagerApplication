@@ -1,7 +1,13 @@
-import React from "react";
+import Layout from "../components/dashboard/layout/Layout";
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <>
+      <div className=" bg-[#fffbeb] h-screen w-screen">
+        <Layout />
+      </div>
+    </>
+  );
 };
 
 export default Home;
