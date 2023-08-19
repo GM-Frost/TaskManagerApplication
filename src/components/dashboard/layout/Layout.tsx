@@ -1,7 +1,6 @@
 import Header from "./Header";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { Footer } from "flowbite-react";
 
 const Layout = () => {
   return (

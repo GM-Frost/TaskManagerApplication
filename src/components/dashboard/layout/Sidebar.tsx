@@ -11,7 +11,7 @@ function SideBarLink({ link }) {
     <Link
       to={link.path}
       className={`flex items-center gap-2 font-light px-3 py-2 hover:bg-[#fde68a] hover:no-underline rounded-lg text-base ${
-        isActive ? "bg-[#fde68a]" : ""
+        isActive ? "bg-[#fde68a] text-red-800" : ""
       } `}
     >
       <span className="text-xl">{link.icon}</span>
@@ -35,7 +35,7 @@ const Sidebar = () => {
             <SideBarLink key={link.key} link={link} />
           ))}
         </div>
-        <button className="flex bg-black hover:bg-red-800 text-white font-bold py-2 px-4 rounded-md">
+        <button className="flex bg-black hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">
           <span className="text-xl">
             <HiOutlineLogout />
           </span>

@@ -4,16 +4,16 @@ import { IoNotificationsOutline } from "react-icons/io5";
 const Header = () => {
   return (
     <>
-      <div className="flex justify-between items-center bg-white h-16 px-4 rounded-xl mx-3 shadow-md">
-        <div className="relative">
+      <div className="flex flex-col md:flex-row justify-between items-center bg-white h-auto md:h-16 px-4 rounded-xl mx-3 shadow-md relative">
+        <div className="relative w-full md:w-auto mb-2 md:mb-0 md:ml-2">
           <FaSearch
             fontSize={14}
-            className="text-gray-400 absolute top-1/2 -translate-y-1/2 left-3"
+            className="text-gray-400 absolute top-1/2 -translate-y-1/2 left-3 md:left-4 lg:left-5"
           />
           <input
             type="text"
             placeholder="Search ..."
-            className="text-sm focus:outline-none focus:border-gray-300 active:outline-none h-10 w-[24rem] border border-gray-300 rounded-lg pl-11 pr-4"
+            className="text-sm focus:outline-none focus:border-gray-300 active:outline-none h-10 w-full md:w-[24rem] border border-gray-300 rounded-lg md:pl-11 pr-4"
           />
         </div>
         <div className="flex items-center gap-2 mr-2">
@@ -21,8 +21,8 @@ const Header = () => {
             {({ open }) => (
               <>
                 <Popover.Button
-                  className={`p-1.5 rounded-md inline-flex items-center text-gray-700 hover:text-opacity-100 focus:outline-none active:bg-gray-800 ${
-                    open ? "bg-red-800 text-white font-bold" : ""
+                  className={`ml-1 p-1.5 rounded-md inline-flex items-center text-gray-700 hover:text-opacity-100 focus:outline-none active:bg-gray-800 ${
+                    open ? "bg-orange-800 text-white font-bold" : ""
                   }`}
                 >
                   <IoNotificationsOutline className="cursor-pointer" />
