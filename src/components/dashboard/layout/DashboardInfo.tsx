@@ -1,10 +1,10 @@
-import React from "react";
+import { FcHighPriority } from "react-icons/fc";
 
 const DashboardInfo = () => {
   return (
     <>
       <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-md flex flex-col flex-1">
-        <div className="flex flex-col items-center justify-center text-xl font-bold">
+        <div className="flex flex-col items-center justify-center text-xl font-bold h-full">
           <q className="border-gray-200 text-center">
             Elevate your productivity with Task Manager. Achieve more,
             effortlessly.
@@ -38,10 +38,39 @@ const DashboardInfo = () => {
             </div>
           </div>
           <div className="taskdiv flex flex-col md:w-1/2 md:h-full">
-            <div className="text-xl font-bold mb-2 md:order-last float-right">
-              Your Task Today
+            <div className=" mb-2 md:order-last float-right">
+              <span className="font-bold text-xl ">Your Task Today</span>
+              <div className="flex justify-center flex-col">
+                <div className="mt-5 rounded-lg p-4  border border-gray-100 flex-row">
+                  <div className="flex justify-between text-sm text-gray-500">
+                    <p>Number 10</p>
+                    <p>10 hrs</p>
+                  </div>
+                  <div className="text-lg font-bold ">
+                    <p>Blog & Social Posts</p>
+                  </div>
+                  <div className="mt-5 text-sm">
+                    <p className="flex gap-2">
+                      <FcHighPriority /> Deadline is today
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-5 rounded-lg p-4  border border-gray-100 flex-row">
+                  <div className="flex justify-between text-sm text-gray-500">
+                    <p>Number 10</p>
+                    <p>10 hrs</p>
+                  </div>
+                  <div className="text-lg font-bold ">
+                    <p>Blog & Social Posts</p>
+                  </div>
+                  <div className="mt-5 text-sm">
+                    <p className="flex gap-2">
+                      <FcHighPriority /> Deadline is today
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col"></div>
           </div>
         </div>
       </div>

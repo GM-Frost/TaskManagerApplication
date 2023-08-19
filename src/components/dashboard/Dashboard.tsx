@@ -4,9 +4,9 @@ import DashboardStatsGrid from "./layout/DashboardStatsGrid";
 const Dashboard = () => {
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 ">
         <DashboardStatsGrid />
-        <div className="flex flex-row w-full">
+        <div className="flex-1 flex-row w-full">
           <DashboardInfo />
         </div>
       </div>
