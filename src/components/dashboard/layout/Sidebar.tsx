@@ -1,7 +1,9 @@
 import { FcSerialTasks } from "react-icons/fc";
 import { SIDEBAR_LINKS } from "../lib/navigation";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HiOutlineLogout } from "react-icons/hi";
+import { useAppDispatch, useAppSelector } from "../../../redux/app/hooks";
+import { logout, selectAuth } from "../../../redux/slice/authSlice";
 
 function SideBarLink({ link }) {
   const { pathname } = useLocation();
@@ -21,6 +23,14 @@ function SideBarLink({ link }) {
 }
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
+  //handleLogout
+  const dispatch = useAppDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/welcome");
+  };
   return (
     <>
       <div className="bg-[#ffffff] shadow-md text-black flex flex-col  w-64 p-3">
@@ -35,7 +45,11 @@ const Sidebar = () => {
             <SideBarLink key={link.key} link={link} />
           ))}
         </div>
-        <button className="flex bg-black hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md">
+        <button
+          type="button"
+          className="flex bg-black hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md"
+          onClick={() => handleLogout()}
+        >
           <span className="text-xl">
             <HiOutlineLogout />
           </span>

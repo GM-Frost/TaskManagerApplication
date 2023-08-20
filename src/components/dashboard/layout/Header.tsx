@@ -1,7 +1,12 @@
 import { Popover, Transition } from "@headlessui/react";
 import { FaSearch } from "react-icons/fa";
 import { IoNotificationsOutline } from "react-icons/io5";
+import { useAppSelector } from "../../../redux/app/hooks";
+import { selectAuth } from "../../../redux/slice/authSlice";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const { fname } = useAppSelector(selectAuth);
+  const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-col md:flex-row justify-between items-center bg-white h-auto md:h-16 px-4 rounded-xl mx-3 shadow-md relative">
@@ -51,7 +56,7 @@ const Header = () => {
               </>
             )}
           </Popover>
-          <small>Welcome, Panda</small>
+          <small>Welcome, {fname}</small>
           <img
             className="h-10 w-10 rounded-full object-cover bg-orange-200 bg-cover bg-no-repeat bg-center"
             src="https://images.pexels.com/photos/146244/pexels-photo-146244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
