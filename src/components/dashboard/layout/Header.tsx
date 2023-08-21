@@ -40,7 +40,7 @@ const Header = () => {
                   leaveFrom="transform scale-300 opacity-100"
                   leaveTo="transform scale-95 opacity-0"
                 >
-                  <Popover.Panel className="absolute right-0 z-10 mt-2.5 w-80">
+                  <Popover.Panel className="absolute right-0 z-50 mt-2.5 w-80">
                     <div className="bg-white rounded-md shadow-md ring-1 ring-black ring-opacity-5 px-2 py-2.5">
                       <strong className="text-gray-700 font-medium align-center items-center justify-center">
                         Notification

@@ -63,7 +63,7 @@ public class TaskController {
 	    }
 	    //UPDATING COMPLETED TASK WITH TASKID 
 	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
-	    @PutMapping("/{taskID}/update/completed")
+	    @PutMapping("/{taskID}/update/status")
 	    public ResponseEntity<?> updateCompleteTask(@PathVariable String taskID, @RequestBody Task updatedTask) {
 	        Task task = taskService.updateTaskCompleted(taskID, updatedTask);
 	        if (task != null) {
@@ -94,5 +94,12 @@ public class TaskController {
 	    public ResponseEntity<List<Task>> getCompletedTasksForUser(@PathVariable String userName) {
 	        List<Task> completedTasks = taskService.getCompletedTasksForUser(userName);
 	        return ResponseEntity.ok(completedTasks);
+	    }
+	    
+	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+	    @GetMapping("/user/{userName}/incomplete")
+	    public ResponseEntity<List<Task>> getIncompleteTasksForUser(@PathVariable String userName) {
+	        List<Task> incompleteTasks = taskService.getIncompleteTasksForUser(userName);
+	        return ResponseEntity.ok(incompleteTasks);
 	    }
 }

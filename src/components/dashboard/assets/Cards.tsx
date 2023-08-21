@@ -13,6 +13,7 @@ interface Task {
   taskDesc: string;
   taskDate: string;
   taskDueDate: string;
+  isComplete: boolean;
 }
 
 interface CardsProps {
@@ -45,16 +46,6 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
     }
   };
 
-  useEffect(() => {
-    fetch(`http://localhost:8080/tasks/user/${userName}`)
-      .then((response) => response.json())
-      .then((data) => setTasks(data))
-      .catch((error) => console.error("Error Fetching Task", error));
-    if (onTaskCreated) {
-      onTaskCreated();
-    }
-  }, [userName, onTaskCreated]);
-
   const handleDeleteTask = async (taskID: string) => {
     try {
       const response = await axios.delete(
@@ -80,6 +71,48 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
     setShowModal(true);
   };
 
+  const handleCheckboxChange = async (taskID: string, isChecked: boolean) => {
+    try {
+      await axios.put(`http://localhost:8080/tasks/${taskID}/update/status`, {
+        complete: isChecked,
+      });
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.taskID === taskID ? { ...task, isComplete: isChecked } : task
+        )
+      );
+    } catch (error) {
+      console.error("Error updating task status:", error);
+    }
+  };
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:8080/tasks/user/${userName}`)
+  //     .then((response) => response.json())
+  //     .then((data) => setTasks(data))
+  //     .catch((error) => console.error("Error Fetching Task", error));
+  //   if (onTaskCreated) {
+  //     onTaskCreated();
+  //   }
+  // }, [userName, onTaskCreated]);
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/tasks/user/${userName}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Set initial isComplete values based on fetched data
+        const tasksWithInitialCompletion = data.map((task: any) => ({
+          ...task,
+          isComplete: task.complete, // Assuming the API response has a property named 'complete' for completion status
+        }));
+        setTasks(tasksWithInitialCompletion);
+      })
+      .catch((error) => console.error("Error Fetching Task", error));
+    if (onTaskCreated) {
+      onTaskCreated();
+    }
+  }, [userName, onTaskCreated]);
+
   return (
     <>
       <div className="container my-12 mx-auto px-4 md:px-12">
@@ -104,7 +137,10 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
                     <input
                       id={`green-checkbox-${index}`}
                       type="checkbox"
-                      value=""
+                      checked={task.isComplete}
+                      onChange={(e) =>
+                        handleCheckboxChange(task.taskID, e.target.checked)
+                      }
                       className="cursor-pointer w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label className="ml-2 text-xs md:text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -121,11 +157,11 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
                   <div className="flex align-center items-center gap-2 mt-3">
                     <MdEditDocument
                       onClick={() => openEditModal(task)}
-                      className="text-blue-400 cursor-pointer hover:text-blue-600 hover:-translate-y-1 transition ease-in-out delay-150"
+                      className="font-bold text-blue-400 cursor-pointer hover:text-blue-600 hover:-translate-y-1 transition ease-in-out delay-150"
                     />
                     <MdOutlineDelete
                       onClick={() => handleDeleteTask(task.taskID)}
-                      className="text-red-400 cursor-pointer hover:text-red-600 hover:-translate-y-1 transition ease-in-out delay-150"
+                      className="font-bold text-red-400 cursor-pointer hover:text-red-600 hover:-translate-y-1 transition ease-in-out delay-150"
                     />
                   </div>
                 </footer>

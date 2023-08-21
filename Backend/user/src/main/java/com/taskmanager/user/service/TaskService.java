@@ -80,6 +80,11 @@ public class TaskService {
 		        return completedTasks;
 		}
 
+		public List<Task> getIncompleteTasksForUser(String userName) {
+			List<Task> inCompletedTasks = taskRepo.findByUserNameAndIsComplete(userName, false);
+	        return inCompletedTasks;
+		}
+
 		
 	
 }
