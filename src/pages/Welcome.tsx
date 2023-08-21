@@ -62,38 +62,34 @@ const Welcome = () => {
   };
 
   const handleLogin = async () => {
-    try {
-      if (userName && password) {
+    if (userName && password) {
+      try {
         await loginUser({ userName, password });
-      } else {
-        setMessage(
-          <span style={{ color: "red" }}>Please fill in all the input.</span>
-        );
+      } catch (error) {
+        setMessage(<span style={{ color: "red" }}>Something went wrong.</span>);
       }
-    } catch (error) {
-      setMessage(<span style={{ color: "red" }}>Something went wrong.</span>);
+    } else {
+      setMessage(
+        <span style={{ color: "red" }}>Please fill in all the input.</span>
+      );
     }
   };
 
   const handleRegister = async () => {
-    try {
-      if (fname && lname && userName && email && password) {
-        await registerUser({ fname, lname, userName, email, password });
-        resetFormData();
-      } else {
-        setMessage(
-          <span style={{ color: "red" }}>Please fill in all the input.</span>
-        );
+    if (fname && lname && email && userName && password) {
+      try {
+        await registerUser({ fname, lname, email, userName, password });
+      } catch (error) {
+        setMessage(<span style={{ color: "red" }}>Something went wrong!</span>);
       }
-    } catch (error) {}
+    } else {
+      setMessage(
+        <span style={{ color: "red" }}>Please fill in all the input.</span>
+      );
+    }
   };
 
   useEffect(() => {
-    if (isLoginError) {
-      setMessage(
-        <span style={{ color: "red" }}>Invalid username | password</span>
-      );
-    }
     if (isLoginSuccess) {
       setMessage(<span style={{ color: "green" }}>Login Success</span>);
       dispatch(
@@ -108,16 +104,23 @@ const Welcome = () => {
     }
 
     if (isRegisterSuccess) {
-      setMessage(<span style={{ color: "green" }}>New User Registered</span>);
+      setMessage(
+        <span style={{ color: "green" }}>User Registered Successfully!</span>
+      );
+      resetFormData();
+    }
+  }, [isLoginSuccess, isRegisterSuccess]);
+
+  useEffect(() => {
+    if (isLoginError) {
+      setMessage(<span style={{ color: "red" }}>Invalid Credentials</span>);
+      resetFormData();
     }
     if (isRegisterError) {
-      setMessage(
-        <span style={{ color: "red" }}>
-          Something went wrong. Try again later!
-        </span>
-      );
+      setMessage(<span style={{ color: "red" }}>User already exists</span>);
+      resetFormData();
     }
-  }, [isLoginSuccess, isLoginError, isRegisterSuccess]);
+  }, [isLoginError, isRegisterError]);
 
   useEffect(() => {
     const timer = setTimeout(() => {

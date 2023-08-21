@@ -15,6 +15,7 @@ import { useAppDispatch } from "./redux/app/hooks.ts";
 import { useEffect } from "react";
 import { setUser } from "./redux/slice/authSlice.ts";
 import { AppProvider } from "./AppContext.tsx";
+import PrivateRoute from "./components/dashboard/redirect/PrivateRoute.tsx";
 
 //SENDING USER DETAILS FROM LOCAL STORAGE
 function App() {
@@ -35,7 +36,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <PrivateRoute>
+        <Home />
+      </PrivateRoute>
+    ),
     children: [
       { index: true, element: <Dashboard /> },
       { path: "allTasks", element: <TaskList /> },

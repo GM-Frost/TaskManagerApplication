@@ -1,6 +1,10 @@
 import { FcHighPriority } from "react-icons/fc";
+import { useAppSelector } from "../../../redux/app/hooks";
+import { selectAuth } from "../../../redux/slice/authSlice";
 
 const DashboardInfo = () => {
+  const { fname } = useAppSelector(selectAuth);
+
   return (
     <>
       <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-md flex flex-col flex-1">
@@ -14,7 +18,7 @@ const DashboardInfo = () => {
           <div className="statsdiv flex flex-col md:w-1/2 md:h-full">
             <h1 className="text-xl font-bold">Stats</h1>
             <div className="mt-5 bg-yellow-100 rounded-lg p-4 relative border border-none flex flex-col flex-1">
-              Good Day! User
+              Good Day! {fname}
             </div>
             <div className="flex gap-2">
               <div className="mt-1 bg-green-100 rounded-lg p-4 relative border border-none flex flex-col flex-1">

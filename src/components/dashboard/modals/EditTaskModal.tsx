@@ -14,17 +14,17 @@ interface Task {
   taskDueDate: string;
 }
 
-interface CreateTaskModalProps {
+interface EditTaskModalProps {
   visible: boolean;
   onClose: () => void;
-  onTaskCreated: () => void;
+  onTaskEdited: () => void;
 }
 
-const CreateTaskModal = ({
+const EditTaskModal = ({
   visible,
   onClose,
-  onTaskCreated,
-}: CreateTaskModalProps) => {
+  onTaskEdited,
+}: EditTaskModalProps) => {
   const getCurrentDate = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -43,18 +43,9 @@ const CreateTaskModal = ({
   const [task, setTask] = useState<Task>({
     taskTitle: "",
     taskDesc: "",
-    taskDate: getCurrentDate(),
+    taskDate: "",
     taskDueDate: "",
   });
-
-  const resetFormData = () => {
-    setTask({
-      taskTitle: "",
-      taskDesc: "",
-      taskDate: "",
-      taskDueDate: "",
-    });
-  };
 
   const handleFormChange = (e: any) => {
     const { name, value } = e.target;
@@ -82,9 +73,8 @@ const CreateTaskModal = ({
         setMessage(
           <span style={{ color: "green" }}>Task Created successfully</span>
         );
-        resetFormData();
-        if (onTaskCreated) {
-          onTaskCreated(); // Trigger the callback to update tasks after a new task is created
+        if (onTaskEdited) {
+          onTaskEdited(); // Trigger the callback to update tasks after a new task is created
         }
         // You can perform any additional actions after successful task creation
       } else {
@@ -187,7 +177,7 @@ const CreateTaskModal = ({
               <div className="flex items-center justify-center">
                 <div className="text-center">
                   <button className="ptext-gray-900 bg-[#fde68a] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 mr-2 mb-2">
-                    Add Task
+                    Edit Task
                   </button>
                 </div>
               </div>
@@ -199,4 +189,4 @@ const CreateTaskModal = ({
   );
 };
 
-export default CreateTaskModal;
+export default EditTaskModal;

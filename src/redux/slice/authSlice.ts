@@ -20,7 +20,11 @@ export const authSlice = createSlice({
   reducers: {
     setUser: (
       state,
-      action: PayloadAction<{ fname: string; userName: string; token: string }>
+      action: PayloadAction<{
+        fname: string;
+        userName: string;
+        token: string;
+      }>
     ) => {
       localStorage.setItem(
         "user",
@@ -30,10 +34,12 @@ export const authSlice = createSlice({
           token: action.payload.token,
         })
       );
-      //strong in state aswell
-      state.fname = action.payload.fname;
-      state.userName = action.payload.userName;
-      state.token = action.payload.token;
+      return {
+        ...state,
+        fname: action.payload.fname,
+        userName: action.payload.userName,
+        token: action.payload.token,
+      };
     },
 
     //for logout

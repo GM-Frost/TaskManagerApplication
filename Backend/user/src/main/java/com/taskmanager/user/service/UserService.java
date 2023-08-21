@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.taskmanager.user.model.User;
+
 import com.taskmanager.user.repository.UserRepository;
 
 @Service
@@ -14,7 +15,6 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepo;
-	
 	
 	
 	//Get All Users
@@ -43,16 +43,7 @@ public class UserService {
 		return userRepo.findByUserName(userName);
 	}
 	
-		
-//		public boolean validateLoginUser(String username, String password) {
-//			User user = userRepo.findByUserName(username);
-//			
-//			if(user==null) {
-//				return false;
-//			}
-//			return user.getPassword().equals(password);
-//			
-//		}
+
 	// CHECK USER FOR LOGIN
 		public User validateLoginAndGetUser(String username, String password) {
 		    User user = userRepo.findByUserName(username);

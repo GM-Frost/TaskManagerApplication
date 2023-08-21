@@ -1,13 +1,26 @@
+import React, { useState } from "react";
 import { IoCreateSharp } from "react-icons/io5";
-import CreateTaskModal from "./modals/CreateTaskModal";
-import { useState } from "react";
+
 import { Transition } from "@headlessui/react";
 import Cards from "./assets/Cards";
-const TaskList = () => {
+import CreateTaskModal from "./modals/CreateTaskModal";
+
+const TaskList: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
+
   const handleOnClose = () => {
     setShowModal(false);
   };
+
+  const updateTasksAfterCreation = () => {
+    // Implement your logic to update tasks after a new task is created
+    // For example, you could refetch tasks or update state
+  };
+  const updateTasksAfterEdit = () => {
+    // Implement your logic to update tasks after a new task is created
+    // For example, you could refetch tasks or update state
+  };
+
   return (
     <>
       <div className="text-center h-[150px] w-full bg-white rounded-lg p-4 border border-gray-200 shadow-md mb-1">
@@ -23,7 +36,6 @@ const TaskList = () => {
         </button>
         <Transition
           show={showModal}
-          ease-in-out
           enter="transition-opacity duration-700"
           enterFrom="opacity-0"
           enterTo="opacity-100"
@@ -31,11 +43,15 @@ const TaskList = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <CreateTaskModal onClose={handleOnClose} visible={showModal} />
+          <CreateTaskModal
+            onClose={handleOnClose}
+            visible={showModal}
+            onTaskCreated={updateTasksAfterCreation}
+          />
         </Transition>
       </div>
       <div className="flex">
-        <Cards />
+        <Cards onTaskCreated={updateTasksAfterCreation} />
       </div>
     </>
   );

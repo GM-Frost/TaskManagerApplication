@@ -30,14 +30,22 @@ public class UserController {
 	// REGISTER NEW USER
 	@CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
 	@PostMapping("/create")
-	public void createUser(@RequestBody User userCreate) {
+	public ResponseEntity<String> createUser(@RequestBody User userCreate) {
 		
 		try {
+			String userName = userCreate.getUserName();
+			boolean userExists = userService.userExists(userName);
+	        if (userExists) {
+	            return ResponseEntity.badRequest().body("User already exists, please select a new username.");
+	        }
+			
 			userCreate.setUserID(UUID.randomUUID().toString().split("-")[0]);
 			this.userService.createUser(userCreate);
+			return ResponseEntity.ok("User created successfully.");
 		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		      e.printStackTrace();
+		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred.");
+		    }
 		
 	}
 
@@ -49,16 +57,16 @@ public class UserController {
 		return userService.getAllUser();
 	}
 	
-	// VALIDATE REGISTER USER
-	@CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
-	@GetMapping("/validateuser/{userName}")
-	public ResponseEntity<UserValidation> validateUser(@PathVariable String userName) {
-		boolean userExists = userService.userExists(userName);
-
-		UserValidation response = new UserValidation(userExists);
-		return ResponseEntity.ok(response);
-	}
-	
+//	// VALIDATE REGISTER USER
+//	@CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+//	@GetMapping("/validateuser/{userName}")
+//	public ResponseEntity<UserValidation> validateUser(@PathVariable String userName) {
+//		boolean userExists = userService.userExists(userName);
+//
+//		UserValidation response = new UserValidation(userExists);
+//		return ResponseEntity.ok(response);
+//	}
+//	
 	// VALIDATE LOGIN USER
 		@CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
 		@PostMapping("/login")

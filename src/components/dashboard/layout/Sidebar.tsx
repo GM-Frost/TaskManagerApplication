@@ -7,6 +7,7 @@ import { logout, selectAuth } from "../../../redux/slice/authSlice";
 
 function SideBarLink({ link }) {
   const { pathname } = useLocation();
+
   const isActive = link.path === pathname;
 
   return (
