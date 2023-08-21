@@ -18,86 +18,75 @@ interface EditTaskModalProps {
   visible: boolean;
   onClose: () => void;
   onTaskEdited: () => void;
+  task: Task | null;
 }
 
 const EditTaskModal = ({
   visible,
   onClose,
   onTaskEdited,
+  task, // Task prop passed from parent component
 }: EditTaskModalProps) => {
-  const getCurrentDate = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
+  const [message, setMessage] = useState<string | JSX.Element | null>(null);
+  const [editedTask, setEditedTask] = useState<Task | null>(null);
 
-  const handleOnClose = (e: any) => {
+  useEffect(() => {
+    // When the task prop changes, update the editedTask state
+    setEditedTask(task);
+  }, [task]);
+
+  const handleOnClose = (e: React.MouseEvent) => {
     if (e.target.id === "modalContainer") onClose();
   };
-  if (!visible) return null;
 
-  const [message, setMessage] = useState<string | JSX.Element | null>(null);
-
-  const [task, setTask] = useState<Task>({
-    taskTitle: "",
-    taskDesc: "",
-    taskDate: "",
-    taskDueDate: "",
-  });
-
-  const handleFormChange = (e: any) => {
+  const handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setTask((prevTask) => ({
-      ...prevTask,
+    setEditedTask((prevTask) => ({
+      ...prevTask!,
       [name]: value,
     }));
   };
 
-  const handleTaskSubmit = async (e: any) => {
+  const handleTaskEdit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!task.taskTitle || !task.taskDesc || !task.taskDueDate) {
+    if (
+      !editedTask?.taskTitle ||
+      !editedTask?.taskDesc ||
+      !editedTask?.taskDueDate
+    ) {
       setMessage(
         <span style={{ color: "red" }}>Please fill in all the details</span>
       );
       return;
     }
+
     try {
-      const response = await axios.post(
-        `http://localhost:8080/tasks/${userName}/create`,
-        task
+      const response = await axios.put(
+        `http://localhost:8080/tasks/${editedTask.taskID}/update`,
+        editedTask
       );
 
       if (response.status === 200) {
         setMessage(
-          <span style={{ color: "green" }}>Task Created successfully</span>
+          <span style={{ color: "green" }}>Task Edited successfully</span>
         );
         if (onTaskEdited) {
-          onTaskEdited(); // Trigger the callback to update tasks after a new task is created
+          onTaskEdited(); // Trigger the callback to update tasks after editing
         }
-        // You can perform any additional actions after successful task creation
       } else {
-        setMessage(<span style={{ color: "red" }}>Error creating task</span>);
+        setMessage(<span style={{ color: "red" }}>Error editing task</span>);
       }
     } catch (error) {
       console.error("Error:", error);
       setMessage(
         <span style={{ color: "red" }}>
-          An error occurred while creating the task
+          An error occurred while editing the task
         </span>
       );
     }
   };
-  const { userName } = useAppSelector(selectAuth);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMessage("");
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [message]);
 
   return (
     <>
@@ -108,7 +97,7 @@ const EditTaskModal = ({
       >
         <div className="bg-white p-2 rounded-md">
           <div className="flex justify-between mb-10">
-            <p className="text-center left-0">Create a Task</p>
+            <p className="text-center left-0">Edit the Task</p>
             <p
               className="text-center justify-center cursor-pointer hover:text-red-600"
               onClick={onClose}
@@ -118,7 +107,7 @@ const EditTaskModal = ({
           </div>
           <div className="w-full max-w-xs">
             {message && <p className="text-center">{message}</p>}
-            <form className="px-8 pt-6 pb-8 mb-4" onSubmit={handleTaskSubmit}>
+            <form className="px-8 pt-6 pb-8 mb-4" onSubmit={handleTaskEdit}>
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
@@ -130,7 +119,7 @@ const EditTaskModal = ({
                   type="text"
                   placeholder="Title..."
                   name="taskTitle"
-                  value={task.taskTitle}
+                  value={editedTask?.taskTitle}
                   onChange={handleFormChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="taskTitle"
@@ -138,7 +127,7 @@ const EditTaskModal = ({
                 <input
                   type="text"
                   name="taskDate"
-                  value={task.taskDate}
+                  value={editedTask?.taskDate}
                   hidden
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="taskDate"
@@ -154,7 +143,7 @@ const EditTaskModal = ({
                 <textarea
                   placeholder="descriptions"
                   name="taskDesc"
-                  value={task.taskDesc}
+                  value={editedTask?.taskDesc}
                   onChange={handleFormChange}
                   className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
                 />
@@ -169,7 +158,7 @@ const EditTaskModal = ({
                 <input
                   type="date"
                   name="taskDueDate"
-                  value={task.taskDueDate}
+                  value={editedTask?.taskDueDate}
                   onChange={handleFormChange}
                   className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 />

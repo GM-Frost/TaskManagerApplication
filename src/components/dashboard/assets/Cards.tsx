@@ -33,9 +33,16 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
     // refetch tasks or update state
   };
 
-  const updateTasksAfterEdit = () => {
-    // Implement your logic to update tasks after a new task is created
-    // For example, you could refetch tasks or update state
+  const updateTasksAfterEdit = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/tasks/user/${userName}`
+      );
+      const data = await response.json();
+      setTasks(data);
+    } catch (error) {
+      console.error("Error updating tasks after edit:", error);
+    }
   };
 
   useEffect(() => {
@@ -67,8 +74,10 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
   };
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-  const handleEditTask = (task: Task) => {
+
+  const openEditModal = (task: Task) => {
     setSelectedTask(task);
+    setShowModal(true);
   };
 
   return (
@@ -115,7 +124,7 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
                   </div>
                   <div className="flex align-center items-center gap-2 mt-3">
                     <MdEditDocument
-                      onClick={() => setShowModal(true)}
+                      onClick={() => openEditModal(task)}
                       className="text-blue-400 cursor-pointer hover:text-blue-600 hover:-translate-y-1 transition ease-in-out delay-150"
                     />
                     <MdOutlineDelete
@@ -134,10 +143,10 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
                   leaveTo="opacity-0"
                 >
                   <EditTaskModal
-                    onClose={handleOnClose}
-                    visible={showModal}
-                    onTaskEdited={updateTasksAfterCreation}
-                    // Pass the selected task to EditTaskModal
+                    visible={showModal} // Change to the visibility state as needed
+                    onClose={handleOnClose} // Provide your onClose function
+                    onTaskEdited={updateTasksAfterEdit} // Provide your onTaskEdited function
+                    task={selectedTask} // Pass the task details here
                   />
                 </Transition>
               </div>
