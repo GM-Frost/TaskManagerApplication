@@ -82,46 +82,42 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
 
   return (
     <>
-      <div className="flex justify-center p-12">
-        <div className="overflow-y-auto max-h-[calc(100vh-200px)]">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {tasks.map((task, index) => (
-              <div
-                key={task.taskID}
-                className="p-6 bg-white border border-gray-200 rounded-lg shadow"
-              >
-                <div className="flex justify-end text-sm text-gray-400">
-                  <p>{task.taskDate}</p>
-                </div>
-                <GiFireDash className="text-orange-600" />
-                <a href="#">
-                  <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                    {task.taskTitle}
-                  </h5>
-                </a>
-                <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">
+      <div className="container my-12 mx-auto px-4 md:px-12">
+        <div className="overflow-y-auto max-h-[calc(100vh-300px)] flex flex-wrap -mx-1 lg:-mx-4">
+          {tasks.map((task, index) => (
+            <div
+              key={task.taskID}
+              className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+            >
+              <article className="bg-white  overflow-hidden rounded-lg shadow-lg">
+                <header className="flex items-center justify-between leading-tight p-2 md:p-4">
+                  <GiFireDash className="text-orange-600" />
+                  <h1 className="text-lg">{task.taskTitle}</h1>
+                  <p className="text-grey-darker text-sm">{task.taskDate}</p>
+                </header>
+                <p className="p-4 text-start mb-3 font-normal text-gray-500 dark:text-gray-400">
                   {task.taskDesc}
                 </p>
-                <div className="flex items-center justify-start gap-3">
-                  <div className="flex items-center mr-4">
+
+                <div className="flex items-center justify-start mb-2">
+                  <div className="flex items-center ml-4">
                     <input
                       id={`green-checkbox-${index}`}
                       type="checkbox"
                       value=""
                       className="cursor-pointer w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
-                    <label
-                      htmlFor={`green-checkbox-${index}`}
-                      className="ml-2 text-xs md:text-sm font-medium text-gray-900 dark:text-gray-300"
-                    >
+                    <label className="ml-2 text-xs md:text-sm font-medium text-gray-900 dark:text-gray-300">
                       Complete
                     </label>
                   </div>
                 </div>
-                <div className="mt-3 flex justify-between items-center">
+                <hr />
+                <footer className="flex items-center justify-between leading-none p-2 md:p-4">
                   <div className="align-center text-sm text-gray-400">
                     <p>Due : {task.taskDueDate}</p>
                   </div>
+
                   <div className="flex align-center items-center gap-2 mt-3">
                     <MdEditDocument
                       onClick={() => openEditModal(task)}
@@ -132,7 +128,7 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
                       className="text-red-400 cursor-pointer hover:text-red-600 hover:-translate-y-1 transition ease-in-out delay-150"
                     />
                   </div>
-                </div>
+                </footer>
                 <Transition
                   show={showModal}
                   enter="transition-opacity duration-700"
@@ -149,9 +145,9 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
                     task={selectedTask} // Pass the task details here
                   />
                 </Transition>
-              </div>
-            ))}
-          </div>
+              </article>
+            </div>
+          ))}
         </div>
       </div>
     </>

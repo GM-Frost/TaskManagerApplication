@@ -12,6 +12,7 @@ interface Task {
   taskDesc: string;
   taskDate: string;
   taskDueDate: string;
+  isComplete: boolean;
 }
 
 interface CreateTaskModalProps {
@@ -45,6 +46,7 @@ const CreateTaskModal = ({
     taskDesc: "",
     taskDate: getCurrentDate(),
     taskDueDate: "",
+    isComplete: false,
   });
 
   const resetFormData = () => {
@@ -53,6 +55,7 @@ const CreateTaskModal = ({
       taskDesc: "",
       taskDate: "",
       taskDueDate: "",
+      isComplete: false,
     });
   };
 

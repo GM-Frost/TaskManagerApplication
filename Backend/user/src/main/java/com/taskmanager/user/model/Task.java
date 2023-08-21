@@ -13,7 +13,15 @@ public class Task {
     private String taskDesc;
     private String taskDate;
     private String taskDueDate;
-    private String userName; 
+    private boolean isComplete;
+    
+    public boolean isComplete() {
+		return isComplete;
+	}
+	public void setComplete(boolean isComplete) {
+		this.isComplete = isComplete;
+	}
+	private String userName; 
     public Task() {
     	
     }

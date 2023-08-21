@@ -10,4 +10,6 @@ public interface TaskRepository extends MongoRepository<Task, String>  {
 
 	List<Task> findByUserName(String userName);
 
+	List<Task> findByUserNameAndIsComplete(String userName, boolean b);
+
 }

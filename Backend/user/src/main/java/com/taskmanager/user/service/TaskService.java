@@ -43,10 +43,20 @@ public class TaskService {
 	            task.setTaskDesc(updatedTask.getTaskDesc());
 	            task.setTaskDate(updatedTask.getTaskDate());
 	            task.setTaskDueDate(updatedTask.getTaskDueDate());
+	         
 	            return taskRepo.save(task);
 	        }
 	        return null;
 	    }
+	    // Update a completed task
+	    public Task updateTaskCompleted(String taskID, Task updatedTask) {
+	    	Task task = taskRepo.findById(taskID).orElse(null);
+	    	if (task != null) {
+	            task.setComplete(updatedTask.isComplete());
+	            return taskRepo.save(task);
+	        }
+			return null;
+		}
 
 	    // Delete a task
 	    public void deleteTask(String taskID) {
@@ -64,5 +74,12 @@ public class TaskService {
 	    public List<Task> getAllTasksForUser(String userName) {
 	        return taskRepo.findByUserName(userName);
 	    }
+
+		public List<Task> getCompletedTasksForUser(String userName) {
+			 List<Task> completedTasks = taskRepo.findByUserNameAndIsComplete(userName, true);
+		        return completedTasks;
+		}
+
+		
 	
 }

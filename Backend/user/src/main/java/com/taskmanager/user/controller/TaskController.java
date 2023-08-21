@@ -61,6 +61,17 @@ public class TaskController {
 	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found.");
 	        }
 	    }
+	    //UPDATING COMPLETED TASK WITH TASKID 
+	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+	    @PutMapping("/{taskID}/update/completed")
+	    public ResponseEntity<?> updateCompleteTask(@PathVariable String taskID, @RequestBody Task updatedTask) {
+	        Task task = taskService.updateTaskCompleted(taskID, updatedTask);
+	        if (task != null) {
+	            return ResponseEntity.ok("Task updated successfully.");
+	        } else {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found.");
+	        }
+	    }
 
 	    //DELETING TASK WITH TASKID
 	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
@@ -76,5 +87,12 @@ public class TaskController {
 	    public ResponseEntity<List<Task>> getAllTasksForUser(@PathVariable String userName) {
 	        List<Task> tasks = taskService.getAllTasksForUser(userName);
 	        return ResponseEntity.ok(tasks);
+	    }
+	  //GETTING COMPLETED TASK RELATED TO USER
+	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+	    @GetMapping("/user/{userName}/completed")
+	    public ResponseEntity<List<Task>> getCompletedTasksForUser(@PathVariable String userName) {
+	        List<Task> completedTasks = taskService.getCompletedTasksForUser(userName);
+	        return ResponseEntity.ok(completedTasks);
 	    }
 }
