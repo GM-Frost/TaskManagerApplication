@@ -13,7 +13,7 @@ function SideBarLink({ link }) {
   return (
     <Link
       to={link.path}
-      className={`flex items-center gap-2 font-light px-3 py-2 hover:bg-[#fde68a] hover:no-underline rounded-lg text-base ${
+      className={`flex items-center gap-2 font-light px-3 py-2 hover:bg-[#fde68a] transition duration-300 hover:scale-110 hover:no-underline rounded-lg text-base ${
         isActive ? "bg-[#fde68a] text-red-800" : ""
       } `}
     >
