@@ -47,7 +47,7 @@ const DashboardStatsGrid = () => {
     <>
       <div className="flex gap-4 w-full ">
         <BoxWrapper>
-          <div className="rounded-full h-12 w-12 flex items-center justify-center">
+          <div className=" rounded-full h-12 w-12 flex items-center justify-center">
             <FcMindMap className="text-5xl" />
           </div>
           <div className="pl-4">
@@ -98,7 +98,7 @@ export default DashboardStatsGrid;
 
 function BoxWrapper({ children }) {
   return (
-    <div className="bg-white rounded-lg p-4 flex-1 border border-gray-200 flex items-center shadow-md gap-5">
+    <div className="bg-white rounded-lg p-4 flex-1 border border-gray-200 flex items-center shadow-md gap-5  transition duration-300 hover:scale-110 ">
       {children}
     </div>
   );
