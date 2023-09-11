@@ -86,16 +86,6 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
     }
   };
 
-  // useEffect(() => {
-  //   fetch(`http://localhost:8080/tasks/user/${userName}`)
-  //     .then((response) => response.json())
-  //     .then((data) => setTasks(data))
-  //     .catch((error) => console.error("Error Fetching Task", error));
-  //   if (onTaskCreated) {
-  //     onTaskCreated();
-  //   }
-  // }, [userName, onTaskCreated]);
-
   useEffect(() => {
     fetch(`http://localhost:8080/tasks/user/${userName}`)
       .then((response) => response.json())
