@@ -1,8 +1,4 @@
 package com.taskmanager.user.repository;
-
-
-
-
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.taskmanager.user.model.Task;
