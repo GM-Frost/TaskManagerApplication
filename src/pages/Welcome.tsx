@@ -249,15 +249,27 @@ const Welcome = () => {
               </div>
               <div className="mt-5">
                 {!showRegister ? (
-                  <p>
-                    Dont have an Account?&nbsp;
-                    <span
-                      onClick={() => setShowRegister(true)}
-                      className="text-[#551e43] cursor-pointer"
-                    >
-                      Register Here
-                    </span>
-                  </p>
+                  <>
+                    <p>
+                      Dont have an Account?&nbsp;
+                      <span
+                        onClick={() => setShowRegister(true)}
+                        className="text-[#551e43] cursor-pointer"
+                      >
+                        Register Here
+                      </span>
+                    </p>
+                    <div className="mt-5 bg-gray-100 text-center">
+                      <p>
+                        <span className="text-[#551e43]">Testing Account:</span>{" "}
+                        demouser
+                      </p>
+                      <p>
+                        <span className="text-[#551e43]">Password:</span>{" "}
+                        demouser
+                      </p>
+                    </div>
+                  </>
                 ) : (
                   <p>
                     Already Registered?&nbsp;
