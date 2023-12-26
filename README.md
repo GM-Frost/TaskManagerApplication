@@ -27,10 +27,20 @@ This is a full-stack Todo application developed using React with Vite (TypeScrip
 
 ### Technologies Used
 
+## FrontEnd
 - React
 - Vite
 - TypeScript
 - Material-UI & TailwindCss
+- Redux
+  
+## Backend
+- Spring Boot
+- Spring Security
+- JWT
+- lombok
+- MongoDB
+- Maven
 
 ### User Dashboard
 
