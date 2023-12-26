@@ -20,6 +20,7 @@ import com.taskmanager.user.model.User;
 import com.taskmanager.user.service.UserService;
 import com.taskmanager.user.validation.UserValidation;
 
+@CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -28,7 +29,7 @@ public class UserController {
 	private UserService userService;
 	
 	// REGISTER NEW USER
-	@CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+	@CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 	@PostMapping("/create")
 	public ResponseEntity<String> createUser(@RequestBody User userCreate) {
 		
@@ -51,24 +52,14 @@ public class UserController {
 
 	
 	// SHOW ALL USER
-	@CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+	@CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 	@GetMapping("/showusers")
 	public List<User> getAllUser(){
 		return userService.getAllUser();
 	}
-	
-//	// VALIDATE REGISTER USER
-//	@CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
-//	@GetMapping("/validateuser/{userName}")
-//	public ResponseEntity<UserValidation> validateUser(@PathVariable String userName) {
-//		boolean userExists = userService.userExists(userName);
-//
-//		UserValidation response = new UserValidation(userExists);
-//		return ResponseEntity.ok(response);
-//	}
-//	
+
 	// VALIDATE LOGIN USER
-		@CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+	@CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 		@PostMapping("/login")
 		public ResponseEntity<?> login(@RequestBody User user) {
 			 String userName = user.getUserName();
@@ -86,14 +77,14 @@ public class UserController {
 		
 	
 		///GETTING USER BY ID
-		@CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+		@CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 		@GetMapping("/{userID}")
 		public User getUser(@PathVariable String userID) {
 			return userService.getUserById(userID);
 		}
 		
 		///GETTING USER BY USERNAME
-		
+		@CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 		@GetMapping("/username/{userName}")
 		public User getUserByUsername(@PathVariable String userName) {
 		    return userService.getUserByUserName(userName);

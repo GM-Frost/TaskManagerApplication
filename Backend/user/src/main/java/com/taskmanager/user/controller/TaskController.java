@@ -19,6 +19,7 @@ import com.taskmanager.user.model.Task;
 
 import com.taskmanager.user.service.TaskService;
 
+@CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
@@ -27,7 +28,7 @@ public class TaskController {
 	    private TaskService taskService;
 
 	  //CREATING NEW TASK
-	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+		@CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 	    @PostMapping("/{userName}/create")
 	    public ResponseEntity<?> createTaskForUser(@PathVariable String userName, @RequestBody Task task) {
 	        Task createdTask = taskService.createTaskForUser(userName, task);
@@ -39,7 +40,7 @@ public class TaskController {
 	    }
 
 	    //GETTING TASK WITH TASKID
-	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+			@CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 	    @GetMapping("/{taskID}")
 	    public ResponseEntity<?> getTaskById(@PathVariable String taskID) {
 	        Task task = taskService.getTaskById(taskID);
@@ -51,7 +52,7 @@ public class TaskController {
 	    }
 
 	    //UPDATING TASK WITH TASKID
-	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+			@CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 	    @PutMapping("/{taskID}/update")
 	    public ResponseEntity<?> updateTask(@PathVariable String taskID, @RequestBody Task updatedTask) {
 	        Task task = taskService.updateTask(taskID, updatedTask);
@@ -62,7 +63,7 @@ public class TaskController {
 	        }
 	    }
 	    //UPDATING COMPLETED TASK WITH TASKID 
-	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+			@CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 	    @PutMapping("/{taskID}/update/status")
 	    public ResponseEntity<?> updateCompleteTask(@PathVariable String taskID, @RequestBody Task updatedTask) {
 	        Task task = taskService.updateTaskCompleted(taskID, updatedTask);
@@ -74,7 +75,7 @@ public class TaskController {
 	    }
 
 	    //DELETING TASK WITH TASKID
-	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+	    @CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 	    @DeleteMapping("/{taskID}/delete")
 	    public ResponseEntity<String> deleteTask(@PathVariable String taskID) {
 	        taskService.deleteTask(taskID);
@@ -82,21 +83,21 @@ public class TaskController {
 	    }
 	    
 	    //GETTING TASK RELATED TO USER
-	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+	    @CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 	    @GetMapping("/user/{userName}")
 	    public ResponseEntity<List<Task>> getAllTasksForUser(@PathVariable String userName) {
 	        List<Task> tasks = taskService.getAllTasksForUser(userName);
 	        return ResponseEntity.ok(tasks);
 	    }
 	  //GETTING COMPLETED TASK RELATED TO USER
-	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+		@CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 	    @GetMapping("/user/{userName}/completed")
 	    public ResponseEntity<List<Task>> getCompletedTasksForUser(@PathVariable String userName) {
 	        List<Task> completedTasks = taskService.getCompletedTasksForUser(userName);
 	        return ResponseEntity.ok(completedTasks);
 	    }
 	    
-	    @CrossOrigin(origins = "http://localhost:5173/", allowedHeaders = { "Content-Type" })
+	    @CrossOrigin(origins = "${cors.allowed-origins}", allowedHeaders = "${cors.allowed-headers}")
 	    @GetMapping("/user/{userName}/incomplete")
 	    public ResponseEntity<List<Task>> getIncompleteTasksForUser(@PathVariable String userName) {
 	        List<Task> incompleteTasks = taskService.getIncompleteTasksForUser(userName);
