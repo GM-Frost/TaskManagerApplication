@@ -16,10 +16,6 @@ const TaskList: React.FC = () => {
     // Implement your logic to update tasks after a new task is created
     // For example, you could refetch tasks or update state
   };
-  const updateTasksAfterEdit = () => {
-    // Implement your logic to update tasks after a new task is created
-    // For example, you could refetch tasks or update state
-  };
 
   return (
     <>

@@ -2,10 +2,19 @@ import { FcSerialTasks } from "react-icons/fc";
 import { SIDEBAR_LINKS } from "../lib/navigation";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HiOutlineLogout } from "react-icons/hi";
-import { useAppDispatch, useAppSelector } from "../../../redux/app/hooks";
-import { logout, selectAuth } from "../../../redux/slice/authSlice";
+import { useAppDispatch } from "../../../redux/app/hooks";
+import { logout } from "../../../redux/slice/authSlice";
 
-function SideBarLink({ link }) {
+interface SidebarLinkProps {
+  link: {
+    path: string;
+    label: string;
+    icon: JSX.Element;
+    key: string;
+  };
+}
+
+const SideBarLink: React.FC<SidebarLinkProps> = ({ link }) => {
   const { pathname } = useLocation();
 
   const isActive = link.path === pathname;
@@ -21,7 +30,7 @@ function SideBarLink({ link }) {
       {link.label}
     </Link>
   );
-}
+};
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -32,6 +41,9 @@ const Sidebar = () => {
     dispatch(logout());
     navigate("/welcome");
   };
+
+  const fullyear = new Date().getFullYear();
+
   return (
     <>
       <div className="bg-[#ffffff] shadow-md text-black flex flex-col  w-64 p-3">
@@ -56,6 +68,7 @@ const Sidebar = () => {
           </span>
           Logout
         </button>
+        &copy; Nayan Bastola - {fullyear}
       </div>
     </>
   );
