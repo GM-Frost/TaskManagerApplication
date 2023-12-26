@@ -3,10 +3,9 @@ import { FaSearch } from "react-icons/fa";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { useAppSelector } from "../../../redux/app/hooks";
 import { selectAuth } from "../../../redux/slice/authSlice";
-import { useNavigate } from "react-router-dom";
+
 const Header = () => {
   const { fname } = useAppSelector(selectAuth);
-  const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-col md:flex-row justify-between items-center bg-white h-auto md:h-16 px-4 rounded-xl mx-3 shadow-md relative">

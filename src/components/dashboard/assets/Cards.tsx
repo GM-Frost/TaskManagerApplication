@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Transition } from "@headlessui/react";
 import EditTaskModal from "../modals/EditTaskModal";
+import { ENV } from "../../../config";
 
 interface Task {
   taskID: string;
@@ -30,15 +31,9 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
     setShowModal(false);
   };
 
-  const updateTasksAfterCreation = () => {
-    // refetch tasks or update state
-  };
-
   const updateTasksAfterEdit = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/tasks/user/${userName}`
-      );
+      const response = await fetch(`${ENV.host}/tasks/user/${userName}`);
       const data = await response.json();
       setTasks(data);
     } catch (error) {
@@ -48,9 +43,7 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
 
   const handleDeleteTask = async (taskID: string) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:8080/tasks/${taskID}/delete`
-      );
+      const response = await axios.delete(`${ENV.host}/tasks/${taskID}/delete`);
 
       if (response.status === 200) {
         setTasks((prevTasks) =>
@@ -73,7 +66,7 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
 
   const handleCheckboxChange = async (taskID: string, isChecked: boolean) => {
     try {
-      await axios.put(`http://localhost:8080/tasks/${taskID}/update/status`, {
+      await axios.put(`${ENV.host}/tasks/${taskID}/update/status`, {
         complete: isChecked,
       });
       setTasks((prevTasks) =>
@@ -87,7 +80,7 @@ const Cards = ({ onTaskCreated }: CardsProps) => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8080/tasks/user/${userName}`)
+    fetch(`${ENV.host}/tasks/user/${userName}`)
       .then((response) => response.json())
       .then((data) => {
         // Set initial isComplete values based on fetched data

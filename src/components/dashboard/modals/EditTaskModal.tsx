@@ -1,13 +1,10 @@
-import { useAppDispatch, useAppSelector } from "../../../redux/app/hooks";
 import { useEffect, useState } from "react";
-import { selectAuth } from "../../../redux/slice/authSlice";
-import axios from "axios";
 
-interface TaskFormProps {
-  onSubmit: (task: Task) => void;
-}
+import axios from "axios";
+import { ENV } from "../../../config";
 
 interface Task {
+  taskID?: string;
   taskTitle: string;
   taskDesc: string;
   taskDate: string;
@@ -22,7 +19,6 @@ interface EditTaskModalProps {
 }
 
 const EditTaskModal = ({
-  visible,
   onClose,
   onTaskEdited,
   task, // Task prop passed from parent component
@@ -36,7 +32,7 @@ const EditTaskModal = ({
   }, [task]);
 
   const handleOnClose = (e: React.MouseEvent) => {
-    if (e.target.id === "modalContainer") onClose();
+    if ((e.target as HTMLDivElement).id === "modalContainer") onClose();
   };
 
   const handleFormChange = (
@@ -64,7 +60,7 @@ const EditTaskModal = ({
 
     try {
       const response = await axios.put(
-        `http://localhost:8080/tasks/${editedTask.taskID}/update`,
+        `${ENV.host}/tasks/${editedTask.taskID}/update`,
         editedTask
       );
 

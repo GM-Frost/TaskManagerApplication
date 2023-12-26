@@ -9,6 +9,7 @@ import { SiStatuspage } from "react-icons/si";
 import { FaTasks } from "react-icons/fa";
 
 import { MdSubtitles } from "react-icons/md";
+import { ENV } from "../../config";
 
 interface ITask {
   taskID: string;
@@ -24,7 +25,7 @@ const CompletedTask: React.FC = () => {
   const { userName } = useAppSelector(selectAuth);
 
   useEffect(() => {
-    const apiUrl = `http://localhost:8080/tasks/user/${userName}/completed`;
+    const apiUrl = `${ENV.host}/tasks/user/${userName}/completed`;
 
     axios
       .get<ITask[]>(apiUrl)

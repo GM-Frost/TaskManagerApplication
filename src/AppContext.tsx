@@ -1,11 +1,15 @@
-import React, { createContext, useContext } from "react";
+import React, { ReactNode, createContext, useContext } from "react";
 import { useDispatch } from "react-redux";
 
 const AppContext = createContext<ReturnType<typeof useDispatch> | undefined>(
   undefined
 );
 
-export const AppProvider: React.FC = ({ children }) => {
+interface AppProviderProps {
+  children: ReactNode;
+}
+
+export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const dispatch = useDispatch();
 
   return <AppContext.Provider value={dispatch}>{children}</AppContext.Provider>;

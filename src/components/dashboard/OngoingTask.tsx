@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAppSelector } from "../../redux/app/hooks";
 import { selectAuth } from "../../redux/slice/authSlice";
@@ -8,6 +8,7 @@ import { SiStatuspage } from "react-icons/si";
 import { FaTasks } from "react-icons/fa";
 import { TbProgressHelp } from "react-icons/tb";
 import { MdSubtitles } from "react-icons/md";
+import { ENV } from "../../config";
 interface Task {
   taskID: string;
   taskTitle: string;
@@ -22,7 +23,7 @@ const OngoingTask = () => {
   const { userName } = useAppSelector(selectAuth);
 
   useEffect(() => {
-    const apiUrl = `http://localhost:8080/tasks/user/${userName}/incomplete`;
+    const apiUrl = `${ENV.host}/tasks/user/${userName}/incomplete`;
 
     axios
       .get<Task[]>(apiUrl)

@@ -2,6 +2,7 @@ import { FcHighPriority } from "react-icons/fc";
 import { useAppSelector } from "../../../redux/app/hooks";
 import { selectAuth } from "../../../redux/slice/authSlice";
 import { useEffect, useState } from "react";
+import { ENV } from "../../../config";
 
 interface Task {
   taskTitle: string;
@@ -24,14 +25,12 @@ const DashboardInfo = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const totalResponse = await fetch(
-          `http://localhost:8080/tasks/user/${userName}`
-        );
+        const totalResponse = await fetch(`${ENV.host}/tasks/user/${userName}`);
         const completedResponse = await fetch(
-          `http://localhost:8080/tasks/user/${userName}/completed`
+          `${ENV.host}/tasks/user/${userName}/completed`
         );
         const incompleteResponse = await fetch(
-          `http://localhost:8080/tasks/user/${userName}/incomplete`
+          `${ENV.host}/tasks/user/${userName}/incomplete`
         );
 
         const totalData = await totalResponse.json();
@@ -56,9 +55,7 @@ const DashboardInfo = () => {
   useEffect(() => {
     const fetchTasksForToday = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8080/tasks/user/${userName}`
-        );
+        const response = await fetch(`${ENV.host}/tasks/user/${userName}`);
         const data = await response.json();
 
         // Get today's date in the format "YYYY-MM-DD"

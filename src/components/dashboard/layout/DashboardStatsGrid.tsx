@@ -1,7 +1,12 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { FcMindMap, FcOk, FcElectricalSensor } from "react-icons/fc";
 import { useAppSelector } from "../../../redux/app/hooks";
 import { selectAuth } from "../../../redux/slice/authSlice";
+import { ENV } from "../../../config";
+
+interface BoxWrapperProps {
+  children: ReactNode;
+}
 
 const DashboardStatsGrid = () => {
   const [taskCounts, setTaskCounts] = useState({
@@ -14,14 +19,12 @@ const DashboardStatsGrid = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const totalResponse = await fetch(
-          `http://localhost:8080/tasks/user/${userName}`
-        );
+        const totalResponse = await fetch(`${ENV.host}/tasks/user/${userName}`);
         const completedResponse = await fetch(
-          `http://localhost:8080/tasks/user/${userName}/completed`
+          `${ENV.host}/tasks/user/${userName}/completed`
         );
         const incompleteResponse = await fetch(
-          `http://localhost:8080/tasks/user/${userName}/incomplete`
+          `${ENV.host}/tasks/user/${userName}/incomplete`
         );
 
         const totalData = await totalResponse.json();
@@ -96,7 +99,7 @@ const DashboardStatsGrid = () => {
 
 export default DashboardStatsGrid;
 
-function BoxWrapper({ children }) {
+function BoxWrapper({ children }: BoxWrapperProps) {
   return (
     <div className="bg-white rounded-lg p-4 flex-1 border border-gray-200 flex items-center shadow-md gap-5  transition duration-300 hover:scale-110 ">
       {children}

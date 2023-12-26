@@ -11,20 +11,10 @@ import OngoingTask from "./components/dashboard/OngoingTask.tsx";
 import { Provider } from "react-redux";
 import Welcome from "./pages/Welcome.tsx";
 import { store } from "./redux/app/store.ts";
-import { useAppDispatch } from "./redux/app/hooks.ts";
-import { useEffect } from "react";
-import { setUser } from "./redux/slice/authSlice.ts";
+
 import { AppProvider } from "./AppContext.tsx";
 import PrivateRoute from "./components/dashboard/redirect/PrivateRoute.tsx";
 
-//SENDING USER DETAILS FROM LOCAL STORAGE
-function App() {
-  const dispatch = useAppDispatch();
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  useEffect(() => {
-    dispatch(setUser(user));
-  }, []);
-}
 const router = createBrowserRouter([
   {
     path: "/welcome",

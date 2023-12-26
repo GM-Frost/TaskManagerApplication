@@ -1,11 +1,8 @@
-import { useAppDispatch, useAppSelector } from "../../../redux/app/hooks";
+import { useAppSelector } from "../../../redux/app/hooks";
 import { useEffect, useState } from "react";
 import { selectAuth } from "../../../redux/slice/authSlice";
 import axios from "axios";
-
-interface TaskFormProps {
-  onSubmit: (task: Task) => void;
-}
+import { ENV } from "../../../config";
 
 interface Task {
   taskTitle: string;
@@ -77,7 +74,7 @@ const CreateTaskModal = ({
     }
     try {
       const response = await axios.post(
-        `http://localhost:8080/tasks/${userName}/create`,
+        `${ENV.host}/tasks/${userName}/create`,
         task
       );
 
